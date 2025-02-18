@@ -14,9 +14,14 @@
     <title>Dashboard</title>
 </head>
 <body>
-    ID: 
-    Name:
-    Email: 
-    input 
+    <!-- Tabla de usuarios con atributos hidden -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </table>
+    <form action="logout.php" method="post"></form>
 </body>
 </html>
