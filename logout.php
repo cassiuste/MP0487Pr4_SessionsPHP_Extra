@@ -4,4 +4,3 @@
     session_destroy();
     header("location: login.html");
     exit;
-?>

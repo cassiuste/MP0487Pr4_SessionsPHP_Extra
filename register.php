@@ -5,27 +5,32 @@
         $name = htmlspecialchars($_POST['name']);
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
-    
-        if (!isset($_SESSION['email'])) {
-            $_SESSION['email'] = $email;
-            $_SESSION['name'] = $name;
-            $_SESSION['password'] = $password;
-            echo "The user was registered correctly. ";
-            sleep(4);
-            header('location: login.html');
-        } 
-        else {
-            if($email === $_SESSION['email']){ 
-                echo "Email already registered. ";
+        $id = uniqid();
+        $emailRegistered = false;
+
+        if(!empty($_SESSION['users'])){
+            foreach($_SESSION['users'] as $key => $user){
+                if($user['email'] === $email){
+                    $emailRegistered = true;
+                    echo "Email already registered. ";
+                }    
             }
-            else{
-                $_SESSION['email'] = $email;
-                $_SESSION['name'] = $name;
-                $_SESSION['password'] = $password;
+            if(!$emailRegistered){
+                $user = ["name" => $name, "email" => $email, "password" => $password];
+                $_SESSION['users'][$id] = $user;
+                $_SESSION['activeUser'] = $id;
                 echo "The user was registered correctly. ";
                 sleep(4);
                 header('location: login.html');
+
             }
         }
+        else{
+            $user = ["name" => $name, "email" => $email, "password" => $password];
+            $_SESSION['users'][$id] = $user;
+            $_SESSION['activeUser'] = $id;
+            echo "The user was registered correctly. ";
+            sleep(4);
+            header('location: login.html');
+        }
     }
-?>

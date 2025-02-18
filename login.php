@@ -1,23 +1,23 @@
 <?php
-    session_start();
-    
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST['password']);
-    
-        if (isset($_SESSION['email'])) {
-            if($email === $_SESSION['email']){
-                if ($password === $_SESSION['password']) {
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = htmlspecialchars($_POST['email']);
+    $password = htmlspecialchars($_POST['password']);
+
+    if(!empty($_SESSION['users'])){
+        foreach ($_SESSION['users'] as $key => $user) {
+            if ($user['email'] === $email) {
+                if ($user['password'] === $password) {
+                    $_SESSION['activeUser'] = $key;
                     header('location: dashboard.php');
                     exit;
-                }
-                else{
+                } else {
                     echo "Wrong credentials. ";
+                    exit;
                 }
             }
-        } else {
-            echo "User not found. ";
         }
     }
-    
-?>
+    echo "User not found. ";
+}
