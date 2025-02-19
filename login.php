@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (password_verify($password, $user['password'])) {
                     $_SESSION['activeUser'] = $key;
                     header('location: dashboard.php');
-                    exit;
+                    exit();
                 } else {
                     echo "Wrong credentials. ";
-                    exit;
+                    exit();
                 }
             }
         }

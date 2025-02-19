@@ -11,14 +11,14 @@ if (!isset($_SESSION['activeUser'])) {
 if(isset($_POST['edit'])){
     $id = htmlspecialchars($_POST['id']);
     header("location: edit.php?id=$id");
-    exit;
+    exit();
 }
 
 // Si se envia el delete que rediriga a la pagina 'delete'
 if(isset($_POST['delete'])){
     $id = htmlspecialchars($_POST['id']);
     header("location: delete.php?id=$id");
-    exit;
+    exit();
 }
 ?>
 

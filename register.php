@@ -32,7 +32,7 @@
                 echo "The user was registered correctly. ";
                 sleep(3);
                 header('location: login.html');
-
+                exit();
             }
         }
         else{
@@ -43,5 +43,6 @@
             echo "The user was registered correctly. ";
             sleep(3);
             header('location: login.html');
+            exit();
         }
     }
