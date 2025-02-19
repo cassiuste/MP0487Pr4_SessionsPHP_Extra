@@ -1,16 +1,20 @@
 <?php
 session_start();
+    // Active user es la variable con la que se verificara 
+    // la session, que es el id del usuario
 if (!isset($_SESSION['activeUser'])) {
     header('Location: login.html');
     exit();
 }
 
+// Si se envia el edit que rediriga a la pagina 'edit'
 if(isset($_POST['edit'])){
     $id = htmlspecialchars($_POST['id']);
     header("location: edit.php?id=$id");
     exit;
 }
 
+// Si se envia el delete que rediriga a la pagina 'delete'
 if(isset($_POST['delete'])){
     $id = htmlspecialchars($_POST['id']);
     header("location: delete.php?id=$id");
@@ -25,26 +29,43 @@ if(isset($_POST['delete'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+
+    <style>
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                padding: 5px;
+            }
+
+            input[type=submit] {
+                margin-top: 10px;
+            }
+        </style>
+
 </head>
 
 <body>
-    <!-- Tabla de usuarios con atributos hidden -->
     <table>
         <thead>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             <?php
+            // Itera sobre la lista de usuarios almacenados en la session
             foreach ($_SESSION['users'] as $id => $user) {
             ?>
-                <tr>
                     <td><?php echo $id; ?></td>
                     <td><?php echo $user['name']; ?></td>
                     <td><?php echo $user['email']; ?></td>
-                </tr>
-                <tr>
                     <td>
                         <form method="post">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
@@ -59,6 +80,7 @@ if(isset($_POST['delete'])){
             ?>
         </tbody>
     </table>
+    <!-- Boton para poder cerrar la sesion -->
     <form action="logout.php" method="post">
         <input type="submit" value="Sign out">
     </form>
