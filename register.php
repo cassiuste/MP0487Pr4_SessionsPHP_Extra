@@ -8,6 +8,8 @@
         // Utilizo el 'uniqid()' para darle a cada usuario un id especifico generado aleatoriamente
         $id = uniqid();
         $emailRegistered = false;
+        $accountCreated = false;
+        $message = "";
 
         if(!empty($_SESSION['users'])){
             // Si hay usuarios en la lista de la session que itere sobre los usuarios para
@@ -15,7 +17,7 @@
             foreach($_SESSION['users'] as $key => $user){
                 if($user['email'] === $email){
                     $emailRegistered = true;
-                    echo "Email already registered. ";
+                    $message = "Email already registered. ";
                 }    
             }
             // Si no encuentra un email que coincide, que cree el usuario
@@ -29,10 +31,8 @@
                 // la variable que dice si hay un usuario activo
                 // tiene como valor el id de ese usuario.
                 $_SESSION['activeUser'] = $id;
-                echo "The user was registered correctly. ";
-                sleep(3);
-                header('location: login.html');
-                exit();
+                $message = "The user was correctly registered. ";
+                $accountCreated = true;
             }
         }
         else{
@@ -40,9 +40,28 @@
             $user = ["name" => $name, "email" => $email, "password" => password_hash($password, PASSWORD_BCRYPT)];
             $_SESSION['users'][$id] = $user;
             $_SESSION['activeUser'] = $id;
-            echo "The user was registered correctly. ";
-            sleep(3);
-            header('location: login.html');
-            exit();
+            $message = "The user was correctly registered. ";
+            $accountCreated = true;
         }
     }
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <?php
+        if($accountCreated){
+            // Si se crea la cuenta, que aparezca el mensaje de exito y
+            // lo rediriga a la pagina del login, si no se crea
+            // que le aparezca el mensaje pero se quede en esta pagina porque
+            // no lo indica la activadad
+            echo "<meta http-equiv='refresh' content='3;url=login.html'>";
+        }
+        ?>
+    </head>
+    <body>
+        <?php echo "$message"; ?>
+    </body>
+    </html>

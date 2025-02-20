@@ -10,8 +10,19 @@
     if(isset($_GET['id'])){
         $userId = htmlspecialchars($_GET['id']);
         unset($_SESSION['users'][$userId]);
-        echo "User deleted correctly. ";
-        header('Location: dashboard.php');
-        exit(); 
+        $message = "User deleted properly. ";
     }
+    ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete</title>
+    <meta http-equiv="refresh" content="3;url=dashboard.php">
+</head>
+<body>
+    <?php echo "$message"; ?>
+</body>
+</html>
 
